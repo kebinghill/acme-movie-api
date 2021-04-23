@@ -1,3 +1,2 @@
 language: node_js
-node-js:
-  -14.15.1
+node-js: -14.15.1
