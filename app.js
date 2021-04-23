@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const { syncAndSeed } = require('./db');
 
 app.get('/', (req, res, next) => {
   try {
@@ -8,11 +9,20 @@ app.get('/', (req, res, next) => {
       <h1>HOME</h1>
       </html>
     `);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 });
+const init = async () => {
+  try {
+    await syncAndSeed();
+    const port = process.env.PORT || 3000;
 
-const port = process.env.PORT || 3000;
+    app.listen(port, () => console.log(`listening on port ${port}`));
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-app.listen(port, () => console.log(`listening on port ${port}`));
-
+init();
 module.exports = app;
